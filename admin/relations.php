@@ -41,7 +41,16 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('navigation', $adminObject->displayNavigation('relations.php'));
         $adminObject->addItemButton(_AM_WGTEAMS_RELATION_ADD, 'relations.php?op=new&amp;team_id=' . $teamId);
         $GLOBALS['xoopsTpl']->assign('buttons', $adminObject->displayButton('left', ''));
-        
+        if (0 === $teamId) {
+            $teamsCount = (int)$teamsHandler->getCountTeams();
+            if (1 === $teamsCount) {
+                // if only one team is available, then immediately preselect this team
+                $teamsAll = $teamsHandler->getAllTeams();
+                foreach (\array_keys($teamsAll) as $i) {
+                    $teamId = $teamsAll[$i]->getVar('team_id');
+                }
+            }
+        }
         $form = getFormFilterTeam($teamId, $start, $limit);
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         $crRelations = new \CriteriaCompo();
@@ -109,7 +118,8 @@ switch ($op) {
             $relationsObj = $relationsHandler->create();
         }
         // Set Vars
-        $relationsObj->setVar('rel_team_id', Request::getInt('rel_team_id'));
+        $relTeamId = Request::getInt('rel_team_id');
+        $relationsObj->setVar('rel_team_id', $relTeamId);
         $relationsObj->setVar('rel_member_id', Request::getInt('rel_member_id'));
         $relationsObj->setVar('rel_info_1_field', Request::getInt('rel_info_1_field'));
         $relationsObj->setVar('rel_info_1_class', Request::getInt('rel_info_1_class'));
@@ -126,7 +136,18 @@ switch ($op) {
         $relationsObj->setVar('rel_info_5_field', Request::getInt('rel_info_5_field'));
         $relationsObj->setVar('rel_info_5_class', Request::getInt('rel_info_5_class'));
         $relationsObj->setVar('rel_info_5', Request::getString('rel_info_5'));
-        $relationsObj->setVar('rel_weight', Request::getInt('rel_weight'));
+        $relWeight = Request::getInt('rel_weight');
+        if (0 === $relWeight) {
+            $crRelations = new \CriteriaCompo();
+            $crRelations->add(new \Criteria('rel_team_id', $relTeamId));
+            $relCount = $relationsHandler->getCount($crRelations);
+            if ($relCount > 0) {
+                $relWeight =  $relCount + 1;
+            } else  {
+                $relWeight = 1;
+            }
+        }
+        $relationsObj->setVar('rel_weight', $relWeight);
         $relationsObj->setVar('rel_submitter', Request::getInt('rel_submitter'));
         $relationsObj->setVar('rel_date_create', \time());
         // Insert Data

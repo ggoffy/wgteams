@@ -212,8 +212,7 @@ class Relations extends \XoopsObject
         $form->addElement(new \XoopsFormEditor(_AM_WGTEAMS_RELATION_INFO_5, 'rel_info_5', $editor_configs));
 
         // Form Text RelWeight
-        $relWeight = $this->isNew() ? '999' : $this->getVar('rel_weight');
-        $form->addElement(new \XoopsFormHidden('rel_weight', $relWeight));
+        $form->addElement(new \XoopsFormHidden('rel_weight', $this->getVar('rel_weight')));
         // Form Select User
         $submitter = $this->isNew() ? $xoopsUser->getVar('uid') : $this->getVar('rel_submitter');
         $form->addElement(new \XoopsFormSelectUser(_AM_WGTEAMS_SUBMITTER, 'rel_submitter', false, $submitter, 1, false));
