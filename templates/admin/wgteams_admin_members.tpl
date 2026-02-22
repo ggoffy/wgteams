@@ -1,7 +1,7 @@
 <!-- Header -->
 <{include file='db:wgteams_admin_header.tpl'}>
 <{if $members_list|default:false}>
-    <table class="table table-bordered  table-striped">
+    <table class="outer">
         <thead>
             <tr class="head">
                 <th class="center"><{$smarty.const._AM_WGTEAMS_MEMBER_ID}></th>

@@ -1,7 +1,7 @@
 <!-- Header -->
 <{include file='db:wgteams_admin_header.tpl'}>
 <{if $teams_list|default:false}>
-    <table class="table table-bordered table-striped" id="sortable">
+    <table class="outer" id="sortable">
         <thead>
             <tr class="head">
                 <th class="center">&nbsp;</th>
