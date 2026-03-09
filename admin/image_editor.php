@@ -122,9 +122,6 @@ $uid = $xoopsUser instanceof \XoopsUser ? $xoopsUser->id() : 0;
 $GLOBALS['xoTheme']->addStylesheet(\WGTEAMS_URL . '/assets/css/style.css');
 $GLOBALS['xoTheme']->addStylesheet(\WGTEAMS_URL . '/assets/css/imageeditor.css');
 
-// add scripts
-$GLOBALS['xoTheme']->addScript(\XOOPS_URL . '/modules/wgteams/assets/js/admin.js');
-
 // assign vars
 $GLOBALS['xoopsTpl']->assign('wgteams_url', \WGTEAMS_URL);
 $GLOBALS['xoopsTpl']->assign('wgteams_icon_url_16', \WGTEAMS_ICONS_URL . '/16');
