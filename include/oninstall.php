@@ -36,13 +36,6 @@ function xoops_module_pre_install_wgteams(\XoopsModule $module)
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
 
-    if (false !== $xoopsSuccess && false !== $phpSuccess) {
-        $moduleTables = &$module->getInfo('tables');
-        foreach ($moduleTables as $table) {
-            $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
-        }
-    }
-
     return $xoopsSuccess && $phpSuccess;
 }
 
